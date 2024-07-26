@@ -25,9 +25,9 @@ login.addEventListener('click', ()=>{
 
     let myFormData = new FormData();
     myFormData.append('usuario', usuario_value);
-    myFormData.append('pass', password_value);
+    myFormData.append('password', password_value);
     
-    fetch('url_del_endpoint_de_login',{
+    fetch('http://localhost/it/login/login',{
         method: "POST",
         body: myFormData
     })

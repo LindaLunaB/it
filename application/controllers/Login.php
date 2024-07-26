@@ -17,8 +17,10 @@
         }
 
         public function login(){
-            $user = "mylove";
-            $pass = "teamoa";
+         //   $user = "mylove";
+           // $pass = "teamoa";
+           $user= $_POST['usuario'];
+           $pass= $_POST['password'];
 
             $query = "SELECT * FROM users WHERE login = '$user'";
             $this->Database->query($query);
@@ -35,13 +37,14 @@
             }
 
             echo json_encode(true);
+            return;
         }
 
         public function register(){
 
             $nombre = "Linda Luna";
-            $login = 'mylove';
-            $pass = 'teamo';
+            $login = 'linda@mail.com';
+            $pass = '12345';
             $idProfile = 1;
             
             $query = "SELECT * FROM users WHERE login = '$login'";
