@@ -5,9 +5,15 @@
     class Login extends Controller {
         private $User;
         private $Database;
+
         public function __construct(){
             $this->User = new User();
             $this->Database = new Database();
+        }
+
+        public function index(){
+            $data = [];
+            $this->view('pages/login', '', $data);
         }
 
         public function login(){
