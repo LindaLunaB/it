@@ -15,112 +15,52 @@ const objSelect = {
 };
 
 tipoBusqueda.addEventListener('change', ()=>{
-    let myFormData = new FormData();
-    
-    let path = getCurrentPath('tipoBusqueda');
-    console.log(path);
-    clearLowerLevelsSelects('tipoBusqueda');
-
-    /* myFormData.append('path',path);
-    fetch('', {
-        method: "POST",
-        body: myFormData
-    })
-    .then(res => res.json())
-    .then(data => {
-        console.log(data);
-    }) */
+    generateData('tipoBusqueda', 'tipoLibro');
 });
 
 tipoLibro.addEventListener('change', ()=>{
-    let myFormData = new FormData();
-    
-    let path = getCurrentPath('tipoLibro');
-    console.log(path);
-    clearLowerLevelsSelects('tipoLibro');
-
-    /* myFormData.append('path',path);
-    fetch('', {
-        method: "POST",
-        body: myFormData
-    })
-    .then(res => res.json())
-    .then(data => {
-        console.log(data);
-    }) */
+    generateData('tipoLibro', 'anio');
 });
 
 anio.addEventListener('change', ()=>{
-    let myFormData = new FormData();
-    
-    let path = getCurrentPath('anio');
-    console.log(path);
-    clearLowerLevelsSelects('anio');
-
-    /* myFormData.append('path',path);
-    fetch('', {
-        method: "POST",
-        body: myFormData
-    })
-    .then(res => res.json())
-    .then(data => {
-        console.log(data);
-    }) */
+    generateData('anio', 'libro');
 });
 
 libro.addEventListener('change', ()=>{
-    let myFormData = new FormData();
-    
-    let path = getCurrentPath('libro');
-    console.log(path);
-    clearLowerLevelsSelects('libro');
-
-    /* myFormData.append('path',path);
-    fetch('', {
-        method: "POST",
-        body: myFormData
-    })
-    .then(res => res.json())
-    .then(data => {
-        console.log(data);
-    }) */
+    generateData('libro', 'tomo');
 });
 
 tomo.addEventListener('change', ()=>{
-    let myFormData = new FormData();
-    
-    let path = getCurrentPath('tomo');
-    console.log(path);
-    clearLowerLevelsSelects('tomo');
+    generateData('tomo', 'fasciculo');
+});
 
-    /* myFormData.append('path',path);
-    fetch('', {
+const generateData = async(select, nextPath)=>{
+    let path = getCurrentPath(select);
+    clearLowerLevelsSelects(select);
+
+    const result = await getContentDirectory(path);
+    objSelect[nextPath].innerHTML = result;
+}
+
+const getContentDirectory = async(path)=>{
+
+    let myFormData = new FormData();
+    myFormData.append('path',path);
+
+    const response = await fetch(`${ base_url }index/getDirectories`, {
         method: "POST",
         body: myFormData
     })
-    .then(res => res.json())
-    .then(data => {
-        console.log(data);
-    }) */
-});
 
-fasciculo.addEventListener('change', ()=>{
-    let myFormData = new FormData();
-    
-    let path = getCurrentPath('fasciculo');
-    console.log(path);
-    clearLowerLevelsSelects('fasciculo');
+    const data = await response.json();
+    let htmlSelect = "<option selected disabled>Seleccione una opción</option>";
 
-    /* myFormData.append('path',path);
-    fetch('', {
-        method: "POST",
-        body: myFormData
-    })
-    .then(res => res.json())
-    .then(data => {
-        console.log(data);
-    }) */
-});
+    data.forEach(element => {
+        htmlSelect += `<option value="${ element }">${ element }</option>`;
+    });
+
+    return htmlSelect;
+}
 
 
 const getCurrentPath = (select)=>{

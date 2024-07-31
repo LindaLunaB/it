@@ -50,8 +50,9 @@
                         <label for="tipoBusqueda" class="form-label">Tipo de busqueda</label>
                         <select class="form-select" id="tipoBusqueda" aria-label="Default select example">
                             <option selected disabled>Seleccione una opción</option>
-                            <option value="Apendice">Apendice</option>
-                            <option value="Apendice2">Apendice2</option>
+                            <?php foreach ($data['carpetas'] as $carpeta) { ?>
+                                <option value="<?= $carpeta ?>"><?= $carpeta ?></option>
+                            <?php } ?>
                         </select>
                     </div>
                     <div class="col-12 col-md-6 mb-3">
@@ -119,6 +120,7 @@
         </section>
     </main>
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> -->
-     <script src="<?= base_url ?>public/js/index.js"></script>
+    <?php if (isset($data['extra_js']))  echo $data['extra_js'] ?>
+    <script src="<?= base_url ?>public/js/index.js"></script>
 </body>
 </html>
