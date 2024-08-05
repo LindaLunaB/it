@@ -1,4 +1,4 @@
-const tipoBusqueda = document.querySelector('#tipoBusqueda'),
+/* const tipoBusqueda = document.querySelector('#tipoBusqueda'),
     tipoLibro = document.querySelector('#tipoLibro'),
     anio = document.querySelector('#anio'),
     libro = document.querySelector('#libro'),
@@ -95,3 +95,120 @@ const clearLowerLevelsSelects = (select)=>{
         }
     }
 }
+ */
+
+const enviar = document.querySelector("#enviar");
+const inputs = ["oficina","tipo","libro","anio","tomo","fasciculo"];
+const tbody = document.querySelector("#tbody");
+
+enviar.addEventListener('click', ()=>{
+    getInputs();
+})
+
+const getInputs = ()=>{
+    let errors = [];
+    let campos = {};
+
+    inputs.forEach(inputName => {
+        let input = document.querySelector(`#${inputName}`);
+        let input_value = input.value.trim();
+
+        if(input_value !== ''){
+            let select = document.querySelector(`#${inputName}Select`);
+            let select_value = select.value;
+            if(select_value === "Seleccione una opción"){
+                errors.push({
+                    "type": "select",
+                    "campo": inputName
+                })
+            }
+        }
+
+        let select = document.querySelector(`#${inputName}Select`);
+        let select_value = select.value;
+
+        if(select_value !== 'Seleccione una opción'){
+            if(input_value === ''){
+                errors.push({
+                    "type": "input",
+                    "campo": inputName
+                })
+            }
+        }
+
+        if(input_value !== '' && select_value !== 'Seleccione una opción'){
+            campos[inputName] = {
+                "condition" : select_value, 
+                "value" : input_value
+            };
+        }
+    });
+
+    let alert_errors = document.querySelector('#alert_errors');
+    if(errors.length > 0){
+
+        alert_errors.classList.remove('d-none');
+        let errors_html = "";
+
+        errors.forEach(error => {
+            let textCampos = {
+                "oficina" : "Oficina",
+                "tipo": "Tipo",
+                "libro": "Libro",
+                "anio": "Año",
+                "tomo": "Tomo",
+                "fasciculo": "Fasciculo"
+            };
+            if(error.type === "input"){
+                errors_html += `<p class="mb-0">-El valor del campo ${textCampos[error.campo]} no puede ser vacio.</p>`;
+            }else{
+                errors_html += `<p class="mb-0">-Seleccione una condición para el campo ${textCampos[error.campo]}.</p>`;
+            }
+        });
+
+        alert_errors.innerHTML = errors_html;
+
+        return;
+    }
+
+    alert_errors.classList.add('d-none');
+
+    if(Object.keys(campos).length === 0){
+        return;
+    }
+
+    let myFormData = new FormData();
+    myFormData.append('data', JSON.stringify(campos));
+
+    fetch(`${ base_url }index/queryBuilder`,{
+        method: "POST",
+        body: myFormData
+    })
+    .then(res => res.json())
+    .then(data =>{
+        data.forEach(element => {
+            tbody.innerHTML += `
+                <tr>    
+                    <th scope="row">${element.oficina}</th>
+                    <td>${element.tipo}</td>
+                    <td>${element.libro}</td>
+                    <td>${element.anio}</td>
+                    <td>${element.tomo}</td>
+                    <td>${element.fasciculo}</td>
+                    <td>
+                        <a target="__blank" href="${ base_url }index/viewFile?file=${element.archivo}">Abrir</a>
+                    </td>
+                </tr>
+            `;
+        });
+    });
+}
+
+inputs.forEach(buttonName => {
+    let button = document.querySelector(`#${buttonName}Button`);
+
+    button.addEventListener('click', ()=>{
+        document.querySelector(`#${buttonName}`).value = "";
+        document.querySelector(`#${buttonName}Select`).value = "Seleccione una opción";
+    })
+});

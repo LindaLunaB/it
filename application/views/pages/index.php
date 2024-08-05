@@ -46,7 +46,151 @@
             </div>
             <div class="border border-light-subtle p-3 border-opacity-10">
                 <div class="row">
-                    <div class="col-12 col-md-6 mb-3">
+                    <div class="col-12 col-md-3 mb-3 d-flex align-items-center justify-content-center">
+                        <p class="mb-0">Oficina</p>
+                    </div>
+                    <div class="col-12 col-md-3 mb-3">
+                        <select class="form-select" id="oficinaSelect" aria-label="Default select example">
+                            <option selected disabled>Seleccione una opción</option>
+                            <option value="igual a">igual a</option>
+                            <option value="no igual a">no igual a</option>
+                            <option value="mayor que">mayor que</option>
+                            <option value="menor que">menor que</option>
+                            <option value="mayor o igual a">mayor o igual a</option>
+                            <option value="menor o igual a">menor o igual a</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-3 mb-3">
+                        <input class="form-control" id="oficina" type="text">
+                    </div>
+                    <div class="col-12 col-md-3 mb-3 d-flex align-items-center justify-content-center">
+                        <button id="oficinaButton" class="btn btn-light">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="m14.03 1.889l9.657 9.657l-8.345 8.345l-.27.27H20v2H6.747l-3.666-3.666a4 4 0 0 1 0-5.657l10.95-10.95Zm.322 16.163l6.507-6.506l-6.829-6.829l-6.828 6.829l6.828 6.828l.32-.323l.002.001ZM5.788 12.96l-1.293 1.293a2 2 0 0 0 0 2.828l3.08 3.08h4.68l.366-.368l-6.833-6.833Z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="col-12 col-md-3 mb-3 d-flex align-items-center justify-content-center">
+                        <p class="mb-0">Tipo</p>
+                    </div>
+                    <div class="col-12 col-md-3 mb-3">
+                        <select class="form-select" id="tipoSelect" aria-label="Default select example">
+                            <option selected disabled>Seleccione una opción</option>
+                            <option value="igual a">igual a</option>
+                            <option value="no igual a">no igual a</option>
+                            <option value="mayor que">mayor que</option>
+                            <option value="menor que">menor que</option>
+                            <option value="mayor o igual a">mayor o igual a</option>
+                            <option value="menor o igual a">menor o igual a</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-3 mb-3">
+                        <input class="form-control" id="tipo" type="text">
+                    </div>
+                    <div class="col-12 col-md-3 mb-3 d-flex align-items-center justify-content-center">
+                        <button id="tipoButton" class="btn btn-light">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="m14.03 1.889l9.657 9.657l-8.345 8.345l-.27.27H20v2H6.747l-3.666-3.666a4 4 0 0 1 0-5.657l10.95-10.95Zm.322 16.163l6.507-6.506l-6.829-6.829l-6.828 6.829l6.828 6.828l.32-.323l.002.001ZM5.788 12.96l-1.293 1.293a2 2 0 0 0 0 2.828l3.08 3.08h4.68l.366-.368l-6.833-6.833Z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="col-12 col-md-3 mb-3 d-flex align-items-center justify-content-center">
+                        <p class="mb-0">Libro</p>
+                    </div>
+                    <div class="col-12 col-md-3 mb-3">
+                        <select class="form-select" id="libroSelect" aria-label="Default select example">
+                            <option selected disabled>Seleccione una opción</option>
+                            <option value="igual a">igual a</option>
+                            <option value="no igual a">no igual a</option>
+                            <option value="mayor que">mayor que</option>
+                            <option value="menor que">menor que</option>
+                            <option value="mayor o igual a">mayor o igual a</option>
+                            <option value="menor o igual a">menor o igual a</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-3 mb-3">
+                        <input class="form-control" id="libro" type="text">
+                    </div>
+                    <div class="col-12 col-md-3 mb-3 d-flex align-items-center justify-content-center">
+                        <button id="libroButton" class="btn btn-light">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="m14.03 1.889l9.657 9.657l-8.345 8.345l-.27.27H20v2H6.747l-3.666-3.666a4 4 0 0 1 0-5.657l10.95-10.95Zm.322 16.163l6.507-6.506l-6.829-6.829l-6.828 6.829l6.828 6.828l.32-.323l.002.001ZM5.788 12.96l-1.293 1.293a2 2 0 0 0 0 2.828l3.08 3.08h4.68l.366-.368l-6.833-6.833Z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="col-12 col-md-3 mb-3 d-flex align-items-center justify-content-center">
+                        <p class="mb-0">Año</p>
+                    </div>
+                    <div class="col-12 col-md-3 mb-3">
+                        <select class="form-select" id="anioSelect" aria-label="Default select example">
+                            <option selected disabled>Seleccione una opción</option>
+                            <option value="igual a">igual a</option>
+                            <option value="no igual a">no igual a</option>
+                            <option value="mayor que">mayor que</option>
+                            <option value="menor que">menor que</option>
+                            <option value="mayor o igual a">mayor o igual a</option>
+                            <option value="menor o igual a">menor o igual a</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-3 mb-3">
+                        <input class="form-control" id="anio" type="text">
+                    </div>
+                    <div class="col-12 col-md-3 mb-3 d-flex align-items-center justify-content-center">
+                        <button id="anioButton" class="btn btn-light">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="m14.03 1.889l9.657 9.657l-8.345 8.345l-.27.27H20v2H6.747l-3.666-3.666a4 4 0 0 1 0-5.657l10.95-10.95Zm.322 16.163l6.507-6.506l-6.829-6.829l-6.828 6.829l6.828 6.828l.32-.323l.002.001ZM5.788 12.96l-1.293 1.293a2 2 0 0 0 0 2.828l3.08 3.08h4.68l.366-.368l-6.833-6.833Z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="col-12 col-md-3 mb-3 d-flex align-items-center justify-content-center">
+                        <p class="mb-0">Tomo</p>
+                    </div>
+                    <div class="col-12 col-md-3 mb-3">
+                        <select class="form-select" id="tomoSelect" aria-label="Default select example">
+                            <option selected disabled>Seleccione una opción</option>
+                            <option value="igual a">igual a</option>
+                            <option value="no igual a">no igual a</option>
+                            <option value="mayor que">mayor que</option>
+                            <option value="menor que">menor que</option>
+                            <option value="mayor o igual a">mayor o igual a</option>
+                            <option value="menor o igual a">menor o igual a</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-3 mb-3">
+                        <input class="form-control" id="tomo" type="text">
+                    </div>
+                    <div class="col-12 col-md-3 mb-3 d-flex align-items-center justify-content-center">
+                        <button id="tomoButton" class="btn btn-light">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="m14.03 1.889l9.657 9.657l-8.345 8.345l-.27.27H20v2H6.747l-3.666-3.666a4 4 0 0 1 0-5.657l10.95-10.95Zm.322 16.163l6.507-6.506l-6.829-6.829l-6.828 6.829l6.828 6.828l.32-.323l.002.001ZM5.788 12.96l-1.293 1.293a2 2 0 0 0 0 2.828l3.08 3.08h4.68l.366-.368l-6.833-6.833Z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="col-12 col-md-3 mb-3 d-flex align-items-center justify-content-center">
+                        <p class="mb-0">Fasciculo</p>
+                    </div>
+                    <div class="col-12 col-md-3 mb-3">
+                        <select class="form-select" id="fasciculoSelect" aria-label="Default select example">
+                            <option selected disabled>Seleccione una opción</option>
+                            <option value="igual a">igual a</option>
+                            <option value="no igual a">no igual a</option>
+                            <option value="mayor que">mayor que</option>
+                            <option value="menor que">menor que</option>
+                            <option value="mayor o igual a">mayor o igual a</option>
+                            <option value="menor o igual a">menor o igual a</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-3 mb-3 align-items-center justify-content-center">
+                        <input class="form-control" id="fasciculo" type="text">
+                    </div>
+                    <div class="col-12 col-md-3 mb-3 d-flex align-items-center justify-content-center">
+                        <button id="fasciculoButton" class="btn btn-light">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="m14.03 1.889l9.657 9.657l-8.345 8.345l-.27.27H20v2H6.747l-3.666-3.666a4 4 0 0 1 0-5.657l10.95-10.95Zm.322 16.163l6.507-6.506l-6.829-6.829l-6.828 6.829l6.828 6.828l.32-.323l.002.001ZM5.788 12.96l-1.293 1.293a2 2 0 0 0 0 2.828l3.08 3.08h4.68l.366-.368l-6.833-6.833Z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <!-- <div class="col-12 col-md-6 mb-3">
                         <label for="tipoBusqueda" class="form-label">Tipo de busqueda</label>
                         <select class="form-select" id="tipoBusqueda" aria-label="Default select example">
                             <option selected disabled>Seleccione una opción</option>
@@ -94,7 +238,12 @@
                             <option value="fasciculo">fasciculo</option>
                             <option value="fasciculo2">fasciculo2</option>
                         </select>
+                    </div> -->
+                </div>
+                <div class="row d-flex align-items-center justify-content-center mt-3">
+                    <div class="col-12 alert alert-danger d-none" role="alert" id="alert_errors">
                     </div>
+                    <button type="button" class="btn btn-primary col-12" id="enviar">Enviar</button>
                 </div>
             </div>
             <div class="border border-light-subtle p-2 border-opacity-10">
@@ -104,22 +253,22 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th scope="col">AÑO</th>
-                                <th scope="col">LIBRO</th>
-                                <th scope="col">TOMO</th>
-                                <th scope="col">FASCICULO</th>
-                                <th scope="col">CARPETA</th>
-                                <th scope="col">DETALLE</th>
+                                <th scope="col">Oficina</th>
+                                <th scope="col">Tipo</th>
+                                <th scope="col">Libro</th>
+                                <th scope="col">Año</th>
+                                <th scope="col">Tomo</th>
+                                <th scope="col">Fasciculo</th>
+                                <th scope="col">Archivo</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="tbody">
                         </tbody>
                     </table>
                 </div>
             </div>
         </section>
     </main>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> -->
     <?php if (isset($data['extra_js']))  echo $data['extra_js'] ?>
     <script src="<?= base_url ?>public/js/index.js"></script>
 </body>
