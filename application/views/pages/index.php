@@ -14,6 +14,13 @@
     </style>
 </head>
 <body class="bg-secondary-subtle">
+    <div id="loader" class="position-absolute w-100 z-1 d-none">
+        <div class="d-flex justify-content-center align-items-center vh-100 bg-white opacity-50">
+            <div class="spinner-border" role="status" id="loading">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
     <header class="bg-white">
         <section class="container d-flex align-items-center justify-content-between">
             <div>
@@ -21,7 +28,7 @@
             </div>
             <div class="px-3 py-4 d-flex align-items-center" style="background-color: #f3f3f9">
                 <img src="<?= base_url ?>public/assets/images/no_imagen.png" width="25" alt="">
-                <span class="ps-3 fw-medium" style="color:#495057; font-size: 0.8125rem; ">JC Dev</span>
+                <span class="ps-3 fw-medium" style="color:#495057; font-size: 0.8125rem; ">Usuario</span>
             </div>
         </section>
         <hr class="text-secondary my-0">
@@ -39,10 +46,10 @@
         </section>
         <hr class="text-secondary my-0">
     </header>
-    <main class="pt-5">
+    <main class="pt-5 position-relative">
         <section class="container bg-white p-3 rounded box-shadow">
             <div class="border border-light-subtle p-3 border-opacity-10">
-                <h4 class="mb-0">Personal</h4>
+                <h4 class="mb-0">Usuario</h4>
             </div>
             <div class="border border-light-subtle p-3 border-opacity-10">
                 <div class="row">
@@ -50,9 +57,9 @@
                         <p class="mb-0">Oficina</p>
                     </div>
                     <div class="col-12 col-md-3 mb-3">
-                        <select class="form-select" id="oficinaSelect" aria-label="Default select example">
+                          <select class="form-select" id="oficinaSelect" aria-label="Default select example">
                             <option selected disabled>Seleccione una opción</option>
-                            <option value="igual a">igual a</option>
+                          <option value="igual a">igual a</option>
                             <option value="no igual a">no igual a</option>
                             <option value="mayor que">mayor que</option>
                             <option value="menor que">menor que</option>
@@ -61,7 +68,7 @@
                         </select>
                     </div>
                     <div class="col-12 col-md-3 mb-3">
-                        <input class="form-control" id="oficina" type="text">
+                       <input class="form-control" id="oficina" type="text" >
                     </div>
                     <div class="col-12 col-md-3 mb-3 d-flex align-items-center justify-content-center">
                         <button id="oficinaButton" class="btn btn-light">
@@ -71,7 +78,7 @@
                         </button>
                     </div>
                     <div class="col-12 col-md-3 mb-3 d-flex align-items-center justify-content-center">
-                        <p class="mb-0">Tipo</p>
+                        <p class="mb-0">Tipo Libro</p>
                     </div>
                     <div class="col-12 col-md-3 mb-3">
                         <select class="form-select" id="tipoSelect" aria-label="Default select example">
@@ -85,7 +92,7 @@
                         </select>
                     </div>
                     <div class="col-12 col-md-3 mb-3">
-                        <input class="form-control" id="tipo" type="text">
+                        <input class="form-control" id="tipo" type="text" placeholder ="Apendices/Inscripciones">
                     </div>
                     <div class="col-12 col-md-3 mb-3 d-flex align-items-center justify-content-center">
                         <button id="tipoButton" class="btn btn-light">
@@ -109,7 +116,7 @@
                         </select>
                     </div>
                     <div class="col-12 col-md-3 mb-3">
-                        <input class="form-control" id="libro" type="text">
+                        <input class="form-control" id="libro" type="text" placeholder ="05">
                     </div>
                     <div class="col-12 col-md-3 mb-3 d-flex align-items-center justify-content-center">
                         <button id="libroButton" class="btn btn-light">
@@ -133,7 +140,7 @@
                         </select>
                     </div>
                     <div class="col-12 col-md-3 mb-3">
-                        <input class="form-control" id="anio" type="text">
+                        <input class="form-control" id="anio" type="text" placeholder="1950">
                     </div>
                     <div class="col-12 col-md-3 mb-3 d-flex align-items-center justify-content-center">
                         <button id="anioButton" class="btn btn-light">
@@ -157,7 +164,7 @@
                         </select>
                     </div>
                     <div class="col-12 col-md-3 mb-3">
-                        <input class="form-control" id="tomo" type="text">
+                        <input class="form-control" id="tomo" type="text" placeholder ="000000015">
                     </div>
                     <div class="col-12 col-md-3 mb-3 d-flex align-items-center justify-content-center">
                         <button id="tomoButton" class="btn btn-light">
@@ -265,6 +272,10 @@
                         <tbody id="tbody">
                         </tbody>
                     </table>
+                    <nav>
+                        <ul id="pagination" class="pagination justify-content-center">
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </section>

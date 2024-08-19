@@ -1,11 +1,13 @@
 <?php
+    require_once BASE_PATH . "application/libraries/FPDI.php";
 
-    require_once BASE_PATH . "application/controllers/Imagen.php";
+    use setasign\Fpdi\Fpdi;
+    use setasign\Fpdf\Fpdf;
     class Index extends Controller{
 
-        private $Imagen;
+        private $levels;
+
         public function __construct(){
-            $this->Imagen = new Imagen();
         }
 
         public function index(){
@@ -23,6 +25,7 @@
 
         public function queryBuilder(){
             $data = json_decode($_REQUEST['data']);
+            $this->levels = json_decode($_REQUEST['levels']);
             $filters = $this->parseFilters($data);
             $results = $this->searchFiles($filters);
             echo json_encode($results);
@@ -39,27 +42,33 @@
         }
 
         protected function searchFiles($filters) {
+            $newFile = [];
             $result = [];
-            $base_path = BASE_PATH . "servidorArchivos/";
+            $base_path = BASE_PATH . 'servidor';
             $this->searchDirectory($base_path, $filters, 0, $result, []);
 
             $files = [];
+            $levels = $this->levels;
             foreach ($result as $res) {
-                $levels = ['oficina', 'tipo', 'libro', 'anio', 'tomo', 'fasciculo', 'archivo'];
-                $file = explode("/",$res);
-                foreach ($file as $key=>$fil) {
-                    if($levels[$key] === 'archivo'){
-                        $fil = $base_path . $res;
-                    }
-                    $newFile[$levels[$key]] = $fil;
+                $pathParts = explode('/', $res);
+                $mappedLevels = [];
+                $lastPart = end($pathParts);
+                if (strpos($lastPart, '.') !== false) {
+                    $mappedLevels['archivo'] = array_pop($pathParts);
                 }
-                $files[] = $newFile;
+
+                foreach ($levels as $index => $level) {
+                    if (isset($pathParts[$index])) {
+                        $mappedLevels[$level] = $pathParts[$index];
+                    }
+                }
+                $files[] = $mappedLevels;
             }
             return $files;
         }
 
         protected function searchDirectory($directory, $filters, $level, &$result, $currentPath = []) {
-            $levels = ['oficina', 'tipo', 'libro', 'anio', 'tomo', 'fasciculo'];
+            $levels = $this->levels;
             $currentLevel = $levels[$level] ?? null;
 
             if ($currentLevel && isset($filters[$currentLevel]) && count($filters[$currentLevel]) > 0) {
@@ -87,7 +96,6 @@
                         $newPath = array_merge($currentPath, [$fileinfo->getFilename()]);
                         $this->searchDirectory($fileinfo->getPathname(), $filters, $level + 1, $result, $newPath);
                     } elseif ($fileinfo->getExtension() === 'pdf') {
-                        // Añadir los archivos PDF encontrados
                         $result[] = implode(DIRECTORY_SEPARATOR, array_merge($currentPath, [$fileinfo->getFilename()]));
                     }
                 }
@@ -123,16 +131,38 @@
         }
 
         public function viewFile(){
-            $filePath = $_REQUEST["file"];
-            header('Content-Description: File Transfer');
-            header('Content-Type: application/pdf'); // Cambia el tipo MIME si el archivo no es un PDF
-            header('Content-Disposition: inline; filename="' . basename($filePath) . '"');
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate');
-            header('Pragma: public');
-            header('Content-Length: ' . filesize($filePath));
-            readfile($filePath);
-            exit;
+            $filePath = FILES_HOST . "//" . $_REQUEST["file"];
+            $filePath = realpath($filePath);
+            if(file_exists($filePath)) {
+                $fileExtension = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
+
+                $mimeTypes = [
+                    "pdf" => "application/pdf"
+                ];
+
+                $pdf = new FPDI();
+                $pageCount = $pdf->setSourceFile($filePath);
+                if(isset($mimeTypes[$fileExtension])) {
+
+                    $pdf = new FPDIExtended();
+                    $pageCount = $pdf->setSourceFile($filePath);
+
+                    for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
+                        $tplIdx = $pdf->importPage($pageNo);
+                        $pdf->AddPage();
+                        $pdf->useTemplate($tplIdx, 0, 0, 210);
+                        $pdf->Image(base_url . 'public/assets/images/informativo.png', 10, 10, 190);
+                    }
+
+                    $pdf->Output('I', 'watermarked_' . basename($filePath));
+                }else{
+                    header('HTTP/1.1 415 Unsupported Media Type');
+                    echo "Tipo de archivo no soportado.";
+                }
+            } else {
+                header('HTTP/1.1 404 Not Found');
+                echo "Archivo no encontrado.";
+            }
         }
     }
 ?>

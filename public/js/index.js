@@ -1,105 +1,11 @@
-/* const tipoBusqueda = document.querySelector('#tipoBusqueda'),
-    tipoLibro = document.querySelector('#tipoLibro'),
-    anio = document.querySelector('#anio'),
-    libro = document.querySelector('#libro'),
-    tomo = document.querySelector('#tomo'),
-    fasciculo = document.querySelector('#fasciculo');
-
-const objSelect = {
-    'tipoBusqueda' : tipoBusqueda,
-    'tipoLibro': tipoLibro,
-    'anio' : anio,
-    'libro' : libro,
-    'tomo' : tomo,
-    'fasciculo' : fasciculo
-};
-
-tipoBusqueda.addEventListener('change', ()=>{
-    generateData('tipoBusqueda', 'tipoLibro');
-});
-
-tipoLibro.addEventListener('change', ()=>{
-    generateData('tipoLibro', 'anio');
-});
-
-anio.addEventListener('change', ()=>{
-    generateData('anio', 'libro');
-});
-
-libro.addEventListener('change', ()=>{
-    generateData('libro', 'tomo');
-});
-
-tomo.addEventListener('change', ()=>{
-    generateData('tomo', 'fasciculo');
-});
-
-const generateData = async(select, nextPath)=>{
-    let path = getCurrentPath(select);
-    clearLowerLevelsSelects(select);
-
-    const result = await getContentDirectory(path);
-    objSelect[nextPath].innerHTML = result;
-}
-
-const getContentDirectory = async(path)=>{
-
-    let myFormData = new FormData();
-    myFormData.append('path',path);
-
-    const response = await fetch(`${ base_url }index/getDirectories`, {
-        method: "POST",
-        body: myFormData
-    })
-
-    const data = await response.json();
-    let htmlSelect = "<option selected disabled>Seleccione una opción</option>";
-
-    data.forEach(element => {
-        htmlSelect += `<option value="${ element }">${ element }</option>`;
-    });
-
-    return htmlSelect;
-}
-
-
-const getCurrentPath = (select)=>{
-    let path = "/",
-        encontrado = false;
-
-    for(let key in objSelect){
-        
-        if(!encontrado){
-            path += objSelect[key].value + "/";
-        }
-
-        if(select === key){
-            encontrado = true;
-        }
-    }
-
-    return path;
-}
-
-const clearLowerLevelsSelects = (select)=>{
-    let encontrado = false;
-
-    for(let key in objSelect){
-        
-        if(encontrado){
-            objSelect[key].innerHTML = "<option selected disabled>Seleccione una opción</option>";
-        }
-
-        if(select === key){
-            encontrado = true;
-        }
-    }
-}
- */
-
 const enviar = document.querySelector("#enviar");
 const inputs = ["oficina","tipo","libro","anio","tomo","fasciculo"];
 const tbody = document.querySelector("#tbody");
+const loader = document.querySelector("#loader");
+
+const itemsPerPage = 10;
+let currentPage = 1;
+let newData = [];
 
 enviar.addEventListener('click', ()=>{
     getInputs();
@@ -179,6 +85,8 @@ const getInputs = ()=>{
 
     let myFormData = new FormData();
     myFormData.append('data', JSON.stringify(campos));
+    myFormData.append('levels', JSON.stringify(inputs));
+    loader.classList.remove('d-none');
 
     fetch(`${ base_url }index/queryBuilder`,{
         method: "POST",
@@ -186,22 +94,21 @@ const getInputs = ()=>{
     })
     .then(res => res.json())
     .then(data =>{
-        data.forEach(element => {
-            tbody.innerHTML += `
-                <tr>    
-                    <th scope="row">${element.oficina}</th>
-                    <td>${element.tipo}</td>
-                    <td>${element.libro}</td>
-                    <td>${element.anio}</td>
-                    <td>${element.tomo}</td>
-                    <td>${element.fasciculo}</td>
-                    <td>
-                        <a target="__blank" href="${ base_url }index/viewFile?file=${element.archivo}">Abrir</a>
-                    </td>
-                </tr>
-            `;
-        });
-    });
+        loader.classList.add('d-none');
+        console.log(data);
+        return;
+        loader.classList.add('d-none');
+        newData = data;
+        renderTable(currentPage, itemsPerPage);
+        renderPagination(data.length, itemsPerPage, currentPage);
+    })
+    /*.catch(err=>{
+        console.log(err);
+        tbody.innerHTML = '';
+        loader.classList.add('d-none');
+        alert_errors.innerHTML = "Lo sentimos, el tiempo de espera se agoto. Intente un busqueda a un nivel inferior.";
+        alert_errors.classList.remove('d-none');
+    });*/
 }
 
 inputs.forEach(buttonName => {
@@ -212,3 +119,99 @@ inputs.forEach(buttonName => {
         document.querySelector(`#${buttonName}Select`).value = "Seleccione una opción";
     })
 });
+
+function renderTable(page, itemsPerPage) {
+    const startIndex = (page - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const currentData = newData.slice(startIndex, endIndex);
+
+    tbody.innerHTML = '';
+
+    currentData.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <th scope="row">${item.oficina}</th>
+            <td>${item.tipo}</td>
+            <td>${item.libro}</td>
+            <td>${item.anio}</td>
+            <td>${item.tomo}</td>
+            <td>${item.fasciculo}</td>
+            <td><a target="__blank" href="${item.archivo}">Abrir</a></td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+function renderPagination(totalItems, itemsPerPage, currentPage) {
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const pagination = document.getElementById('pagination');
+    pagination.innerHTML = '';
+
+    const createPageItem = (page, label, active = false, disabled = false) => {
+        const li = document.createElement('li');
+        li.classList.add('page-item');
+        if (active) li.classList.add('active');
+        if (disabled) li.classList.add('disabled');
+        const a = document.createElement('a');
+        a.classList.add('page-link');
+        a.href = '#';
+        a.textContent = label;
+        a.addEventListener('click', function (event) {
+            event.preventDefault();
+            if (!disabled) {
+                currentPage = page;
+                renderTable(currentPage, itemsPerPage);
+                renderPagination(totalItems, itemsPerPage, currentPage);
+            }
+        });
+        li.appendChild(a);
+        return li;
+    };
+
+    const addEllipsis = () => {
+        const li = document.createElement('li');
+        li.classList.add('page-item', 'disabled');
+        const a = document.createElement('a');
+        a.classList.add('page-link');
+        a.href = '#';
+        a.textContent = '...';
+        li.appendChild(a);
+        return li;
+    };
+
+    const maxPagesToShow = 5;
+    const halfMaxPagesToShow = Math.floor(maxPagesToShow / 2);
+    let startPage = Math.max(1, currentPage - halfMaxPagesToShow);
+    let endPage = Math.min(totalPages, currentPage + halfMaxPagesToShow);
+
+    if (currentPage - startPage < halfMaxPagesToShow) {
+        endPage = Math.min(totalPages, endPage + (halfMaxPagesToShow - (currentPage - startPage)));
+    }
+    if (endPage - currentPage < halfMaxPagesToShow) {
+        startPage = Math.max(1, startPage - (halfMaxPagesToShow - (endPage - currentPage)));
+    }
+
+    pagination.appendChild(createPageItem(1, 'Primero', false, currentPage === 1));
+    pagination.appendChild(createPageItem(currentPage - 1, 'Anterior', false, currentPage === 1));
+
+    if (startPage > 1) {
+        pagination.appendChild(createPageItem(1, '1'));
+        if (startPage > 2) {
+            pagination.appendChild(addEllipsis());
+        }
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+        pagination.appendChild(createPageItem(i, i, i === currentPage));
+    }
+
+    if (endPage < totalPages) {
+        if (endPage < totalPages - 1) {
+            pagination.appendChild(addEllipsis());
+        }
+        pagination.appendChild(createPageItem(totalPages, totalPages));
+    }
+
+    pagination.appendChild(createPageItem(currentPage + 1, 'Siguiente', false, currentPage === totalPages));
+    pagination.appendChild(createPageItem(totalPages, 'Ultimo', false, currentPage === totalPages));
+}
