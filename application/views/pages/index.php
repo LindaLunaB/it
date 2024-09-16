@@ -52,7 +52,7 @@
                 <h4 class="mb-0">Usuario</h4>
             </div>
             <div class="border border-light-subtle p-3 border-opacity-10">
-                <div class="row">
+                <div id="contenedor" class="row">
                     <div class="col-12 col-md-3 mb-3 d-flex align-items-center justify-content-center">
                         <p class="mb-0">Oficina</p>
                     </div>
@@ -197,55 +197,6 @@
                             </svg>
                         </button>
                     </div>
-                    <!-- <div class="col-12 col-md-6 mb-3">
-                        <label for="tipoBusqueda" class="form-label">Tipo de busqueda</label>
-                        <select class="form-select" id="tipoBusqueda" aria-label="Default select example">
-                            <option selected disabled>Seleccione una opción</option>
-                            <?php foreach ($data['carpetas'] as $carpeta) { ?>
-                                <option value="<?= $carpeta ?>"><?= $carpeta ?></option>
-                            <?php } ?>
-                        </select>
-                    </div>
-                    <div class="col-12 col-md-6 mb-3">
-                        <label for="tipoLibro" class="form-label">Tipo de libro</label>
-                        <select class="form-select" id="tipoLibro" aria-label="Default select example">
-                            <option selected disabled>Seleccione una opción</option>
-                            <option value="tipoLibro">tipoLibro</option>
-                            <option value="tipoLibro2">tipoLibro2</option>
-                        </select>
-                    </div>
-                    <div class="col-12 col-md-3 mb-3">
-                        <label for="anio" class="form-label">Año</label>
-                        <select class="form-select" id="anio" aria-label="Default select example">
-                            <option selected disabled>Seleccione una opción</option>
-                            <option value="anio">anio</option>
-                            <option value="anio2">anio2</option>
-                        </select>
-                    </div>
-                    <div class="col-12 col-md-3 mb-3">
-                        <label for="libro" class="form-label">Libro</label>
-                        <select class="form-select" id="libro" aria-label="Default select example">
-                            <option selected disabled>Seleccione una opción</option>
-                            <option value="libro">libro</option>
-                            <option value="libro2">libro2</option>
-                        </select>
-                    </div>
-                    <div class="col-12 col-md-3 mb-3">
-                        <label for="tomo" class="form-label">Tomo</label>
-                        <select class="form-select" id="tomo" aria-label="Default select example">
-                            <option selected disabled>Seleccione una opción</option>
-                            <option value="tomo">tomo</option>
-                            <option value="tomo2">tomo2</option>
-                        </select>
-                    </div>
-                    <div class="col-12 col-md-3 mb-3">
-                        <label for="fasciculo" class="form-label">Fasciculo</label>
-                        <select class="form-select" id="fasciculo" aria-label="Default select example">
-                            <option selected disabled>Seleccione una opción</option>
-                            <option value="fasciculo">fasciculo</option>
-                            <option value="fasciculo2">fasciculo2</option>
-                        </select>
-                    </div> -->
                 </div>
                 <div class="row d-flex align-items-center justify-content-center mt-3">
                     <div class="col-12 alert alert-danger d-none" role="alert" id="alert_errors">
