@@ -96,7 +96,7 @@ const getInputs = ()=>{
     .then(data =>{
         loader.classList.add('d-none');
         console.log(data);
-        return;
+        //return;
         loader.classList.add('d-none');
         newData = data;
         renderTable(currentPage, itemsPerPage);

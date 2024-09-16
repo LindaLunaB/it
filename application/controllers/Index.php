@@ -45,7 +45,8 @@
             $newFile = [];
             $result = [];
             //Cambiar $base_path al servidor de archivos
-            $base_path = BASE_PATH . 'servidor';
+            //$base_path = BASE_PATH . 'servidor';
+            $base_path = FILES_HOST;
             $this->searchDirectory($base_path, $filters, 0, $result, []);
 
             $files = [];
