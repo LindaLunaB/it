@@ -1,5 +1,6 @@
 <?php
     require_once BASE_PATH . "application/libraries/FPDI.php";
+    require_once BASE_PATH . "application/libraries/JWT.php";
 
     use setasign\Fpdi\Fpdi;
     use setasign\Fpdf\Fpdf;
@@ -10,7 +11,10 @@
         public function __construct(){
         }
 
-        public function index(){
+        public function index(){//validacion de token
+            if(!isset($_SESSION['token']) || !JSONWT::validateToken($_SESSION['token'])){
+                header('Location: ' . base_url . 'login');
+            }
 
             $data = [
                 "extra_js" => "

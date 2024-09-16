@@ -27,19 +27,23 @@ login.addEventListener('click', ()=>{
     myFormData.append('usuario', usuario_value);
     myFormData.append('password', password_value);
     
-    fetch('http://192.168.1.176/it/login/login',{
+    fetch(`${ base_url }login/login`,{
         method: "POST",
         body: myFormData
     })
     .then(res => res.json())
     .then(data=>{
         console.log(data);
-        if(data === true){
+        localStorage.setItem('_token', data.token);
+        localStorage.setItem('_exp', data.exp);
+
+        window.location.href = `${ base_url }`;
+        /* if(data === true){
             window.location.href = "http://192.168.1.176/it";
         }
         else{
             alert(data);
-        }
+        } */
     })
     
 });

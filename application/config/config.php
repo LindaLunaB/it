@@ -10,6 +10,10 @@
     define ('DB_PASSWORD', $_ENV['DB_PASSWORD']);
     define ('DB_NAME', $_ENV['DB_NAME']);
 
+    //Configuración de JWT
+    define ('ENCRYPT', $_ENV['ENCRYPT']);
+    define ('CRYPTO_KEY', $_ENV['CRYPTO_KEY']);
+
     //Zona horaria
     date_default_timezone_set ('America/Mexico_City');
     setlocale(LC_MONETARY, 'es_MX');

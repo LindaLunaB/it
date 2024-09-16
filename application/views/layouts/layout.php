@@ -25,6 +25,9 @@
             }
         ?>
     </main>
+    <script>
+        const base_url = '<?= base_url ?>';
+    </script>
     <?php
         if (isset($data['extra_js']))  echo $data['extra_js'];
     ?>

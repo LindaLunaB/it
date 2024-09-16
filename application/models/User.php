@@ -1,9 +1,9 @@
 <?php
-    require_once BASE_PATH . "application/models/Database.php";
+    //require_once BASE_PATH . "application/models/Database.php";
     class User{
         private $Database;
         public function __construct(){
-            $this->Database = new Database();
+            //$this->Database = new Database();
         }
 
         public function register($nombre, $login, $pass, $idProfile){

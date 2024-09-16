@@ -1,6 +1,7 @@
 <?php
     require_once BASE_PATH . "application/models/User.php";
-    require_once BASE_PATH . "application/models/Database.php";
+    //require_once BASE_PATH . "application/models/Database.php";
+    require_once BASE_PATH . "application/libraries/JWT.php";
     
     class Login extends Controller {
         private $User;
@@ -8,23 +9,32 @@
 
         public function __construct(){
             $this->User = new User();
-            $this->Database = new Database();
+            //$this->Database = new Database();
         }
 
         public function index(){
+            if(isset($_SESSION['token']) && JSONWT::validateToken($_SESSION['token'])){
+                header('Location: ' . base_url);
+            }
             $data = [];
             $this->view('pages/login', '', $data);
         }
 
         public function login(){
-         //   $user = "mylove";
-           // $pass = "teamoa";
-           $user= $_POST['usuario'];
-           $pass= $_POST['password'];
+            $password = password_hash('12345', PASSWORD_DEFAULT);
+            $userDB = [
+                [
+                    'usuario' => 'carlos@mail.com',
+                    'pass' => $password
+                ]
+            ];
 
-            $query = "SELECT * FROM users WHERE login = '$user'";
+            $user= $_POST['usuario'];
+            $pass= $_POST['password'];
+
+            /* $query = "SELECT * FROM users WHERE login = '$user'";
             $this->Database->query($query);
-            $userDB = $this->Database->resultSet();
+            $userDB = $this->Database->resultSet(); */
 
             if(count($userDB) == 0){
                 echo json_encode("Lo sentimos, usuario o contraseña incorrectos");
@@ -36,7 +46,16 @@
                 return;
             }
 
-            echo json_encode(true);
+            $data = [
+                'usuario' => $userDB[0]['usuario'],
+                'nombre' => 'Carlos'
+            ];
+
+            $token = JSONWT::generateToken($data, 3000);
+
+            $_SESSION['token'] = $token['token'];
+
+            echo json_encode($token);
             return;
         }
 

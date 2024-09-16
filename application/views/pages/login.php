@@ -83,7 +83,7 @@
             </div>
         </footer>
     </div>
-
+    <script> const base_url = '<?= base_url ?>';</script>
     <script src="<?= base_url ?>public/js/login.js"></script>
 </body>
 </html>
