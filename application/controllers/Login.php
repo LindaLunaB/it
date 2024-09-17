@@ -9,7 +9,7 @@
 
         public function __construct(){
             $this->User = new User();
-            //$this->Database = new Database();
+            $this->Database = new Database();
         }
 
         public function index(){
@@ -21,20 +21,20 @@
         }
 
         public function login(){
-            $password = password_hash('12345', PASSWORD_DEFAULT);
+          /*  $password = password_hash('12345', PASSWORD_DEFAULT);
             $userDB = [
                 [
                     'usuario' => 'carlos@mail.com',
                     'pass' => $password
                 ]
-            ];
+            ];*/
 
             $user= $_POST['usuario'];
             $pass= $_POST['password'];
 
-            /* $query = "SELECT * FROM users WHERE login = '$user'";
+            $query = "SELECT * FROM users WHERE login = '$user'";
             $this->Database->query($query);
-            $userDB = $this->Database->resultSet(); */
+            $userDB = $this->Database->resultSet(); 
 
             if(count($userDB) == 0){
                 echo json_encode("Lo sentimos, usuario o contraseña incorrectos");
@@ -47,8 +47,9 @@
             }
 
             $data = [
-                'usuario' => $userDB[0]['usuario'],
-                'nombre' => 'Carlos'
+                'usuario' => $userDB[0]['login'],
+                'nombre' => $userDB[0]['nombre'],
+                'idProfile' => $userDB[0]['idProfile']
             ];
 
             $token = JSONWT::generateToken($data, 3000);

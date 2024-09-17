@@ -5,7 +5,7 @@ const loader = document.querySelector("#loader");
 const itemsPerPage = 10;
 let currentPage = 1;
 let newData = [];
-let tab = 'pishelugar';
+let tab = 'llave';
 
 enviar.addEventListener('click', ()=>{
     getInputs();
@@ -99,8 +99,8 @@ const getInputs = ()=>{
     .then(data =>{
         loader.classList.add('d-none');
         console.log(data);
-        return;
-        loader.classList.add('d-none');
+        //return;
+        //loader.classList.add('d-none');
         newData = data;
         renderTable(currentPage, itemsPerPage);
         renderPagination(data.length, itemsPerPage, currentPage);

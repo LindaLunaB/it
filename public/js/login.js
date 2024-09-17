@@ -34,10 +34,12 @@ login.addEventListener('click', ()=>{
     .then(res => res.json())
     .then(data=>{
         console.log(data);
-        localStorage.setItem('_token', data.token);
-        localStorage.setItem('_exp', data.exp);
-
-        window.location.href = `${ base_url }`;
+        if(data.token !== undefined && data.exp !== undefined){
+            localStorage.setItem('_token', data.token);
+            localStorage.setItem('_exp', data.exp);
+    
+            window.location.href = `${ base_url }`;
+        }
         /* if(data === true){
             window.location.href = "http://192.168.1.176/it";
         }

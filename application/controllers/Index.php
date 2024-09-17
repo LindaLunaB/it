@@ -13,6 +13,7 @@
 
         public function index(){//validacion de token
             if(!isset($_SESSION['token']) || !JSONWT::validateToken($_SESSION['token'])){
+                unset($_SESSION['token']);
                 header('Location: ' . base_url . 'login');
             }
 
@@ -56,11 +57,12 @@
             $files = [];
             $levels = $this->levels;
             foreach ($result as $res) {
-                $pathParts = explode('/', $res);
+                $pathParts = explode('\\', $res);
                 $mappedLevels = [];
                 $lastPart = end($pathParts);
                 if (strpos($lastPart, '.') !== false) {
-                    $mappedLevels['archivo'] = array_pop($pathParts);
+                    array_pop($pathParts);
+                    $mappedLevels['archivo'] = 'index/viewFile?file=' . $res;
                 }
 
                 foreach ($levels as $index => $level) {
@@ -138,6 +140,8 @@
 
         public function viewFile(){
             $filePath = FILES_HOST . "//" . $_REQUEST["file"];
+            //echo json_encode($filePath);
+            //return;
             $filePath = realpath($filePath);
             if(file_exists($filePath)) {
                 $fileExtension = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
