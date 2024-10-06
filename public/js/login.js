@@ -31,6 +31,7 @@ login.addEventListener('click', ()=>{
         method: "POST",
         body: myFormData
     })
+    //.then(res => res.text())
     .then(res => res.json())
     .then(data=>{
         console.log(data);
