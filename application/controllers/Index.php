@@ -27,8 +27,9 @@
             $this->view('pages/index', '', $data);
         }
 
-        public function pdfJS(){
+        public function pdfJS($token){
             $data = [
+                "url" => base_url . 'index/viewFile?file=' . $token,
                 "extra_js" => "
                     <script>
                         const base_url = '" . base_url . "';
@@ -72,7 +73,10 @@
                 $mappedLevels = [];
                 $lastPart = end($pathParts);
                 if (strpos($lastPart, '.') !== false) {
-                    $mappedLevels['archivo'] = 'index/viewFile?file=' . $res;
+                    $res = str_replace('\\', '/', $res);
+                    $res = JSONWT::generateToken(['archivo' => $res]);
+                    $mappedLevels['archivo'] = $res['token'];
+                    $mappedLevels['name'] = $lastPart;
                 }
 
                 foreach ($levels as $index => $level) {
@@ -149,7 +153,14 @@
         }
 
         public function viewFile(){
-            $filePath = FILES_HOST . "//" . $_REQUEST["file"];
+            $token = $_REQUEST["file"];
+            $file = JSONWT::validateToken($token);
+            if(!$file){
+                header('Location: ' . base_url . 'errors/404');
+                exit;
+            }
+            $file = $file->archivo;
+            $filePath = FILES_HOST . "//" . $file;
             $filePath = realpath($filePath);
             if(file_exists($filePath)) {
                 $fileExtension = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));

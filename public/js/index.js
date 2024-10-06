@@ -1,5 +1,6 @@
 const enviar = document.querySelector("#enviar");
 const tbody = document.querySelector("#tbody");
+const thead = document.querySelector("#thead");
 const loader = document.querySelector("#loader");
 
 const itemsPerPage = 10;
@@ -120,17 +121,32 @@ function renderTable(page, itemsPerPage) {
     const currentData = newData.slice(startIndex, endIndex);
 
     tbody.innerHTML = '';
+    thead.innerHTML = '';
+
+    let head = '<tr>';
+    config[tab].forEach(element => {
+        head += `<th scope="col">${element.placeholder}</th>`;
+    });
+    head += `
+        <th>Archivo</th>
+        <th></th>
+        </tr>
+    `;
+
+    thead.innerHTML = head;
 
     currentData.forEach(item => {
         const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <th scope="row">${item.oficina}</th>
-            <td>${item.tipo}</td>
-            <td>${item.libro}</td>
-            <td>${item.anio}</td>
-            <td>${item.tomo}</td>
-            <td>${item.fasciculo}</td>
-            <td><a target="__blank" href="${item.archivo}">Abrir</a></td>
+        config[tab].forEach(element => {
+            tr.innerHTML += `<td>${item[element.name]}</td>`;
+        });
+        tr.innerHTML += `
+            <td>${item.name}</td>
+            <td>
+                <button onclick="openFile('${item.archivo}','${item.name}')" type="button" class="btn btn-primary">
+                    Abrir
+                </button>
+            </td>
         `;
         tbody.appendChild(tr);
     });
@@ -215,13 +231,12 @@ function renderForm(inputs){
     contenedor.innerHTML = '';
 
     inputs.forEach(campo =>{
-        console.log(campo);
         // Crear el div para el label
         const divLabel = document.createElement('div');
         divLabel.className = 'col-12 col-md-3 mb-3 d-flex align-items-center justify-content-center';
         const label = document.createElement('p');
         label.className = 'mb-0';
-        label.textContent = campo.name.replace(/^\w/, (c) => c.toUpperCase()); ;
+        label.textContent = campo.placeholder;
         divLabel.appendChild(label);
         contenedor.appendChild(divLabel);
 
@@ -293,6 +308,16 @@ function renderForm(inputs){
     });
 }
 
+function openFile(token, name){
+    const myModal = new bootstrap.Modal(document.getElementById('exampleModal'), {
+        keyboard: false
+    });
+    
+    document.querySelector('#exampleModal .modal-title').textContent = name;
+    document.querySelector('#exampleModal .modal-body').innerHTML = `<iframe src="${ base_url }index/pdfJS/${ token }" width="100%" height="100%" frameborder="0"></iframe>`;
+    console.log(token, name);
+    myModal.show();
+}
 const config = {
     llave:[
         {

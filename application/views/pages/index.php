@@ -209,16 +209,7 @@
             <div class="border border-light-subtle p-3 border-opacity-10">
                 <div class="table-responsive">
                     <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">Oficina</th>
-                                <th scope="col">Tipo</th>
-                                <th scope="col">Libro</th>
-                                <th scope="col">Año</th>
-                                <th scope="col">Tomo</th>
-                                <th scope="col">Fasciculo</th>
-                                <th scope="col">Archivo</th>
-                            </tr>
+                        <thead id="thead">
                         </thead>
                         <tbody id="tbody">
                         </tbody>
@@ -230,7 +221,25 @@
                 </div>
             </div>
         </section>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="height: 500px">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+                </div>
+            </div>
+        </div>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     <?php if (isset($data['extra_js']))  echo $data['extra_js'] ?>
     <script src="<?= base_url ?>public/js/index.js"></script>
 </body>
