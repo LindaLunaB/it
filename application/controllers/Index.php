@@ -27,9 +27,16 @@
             $this->view('pages/index', '', $data);
         }
 
-        public function pdfJS($token){
+        public function pdfJS(){
+            $token = $_REQUEST['file'];
+            $file = JSONWT::validateToken($token);
+            if(!$file){
+                header('Location: ' . base_url . 'errors/404');
+                exit;
+            }
+            $url = base_url . 'index/viewFile?file=' . $token;
             $data = [
-                "url" => base_url . 'index/viewFile?file=' . $token,
+                "url" => $url,
                 "extra_js" => "
                     <script>
                         const base_url = '" . base_url . "';
@@ -153,7 +160,7 @@
         }
 
         public function viewFile(){
-            $token = $_REQUEST["file"];
+            $token = $_REQUEST['file'];
             $file = JSONWT::validateToken($token);
             if(!$file){
                 header('Location: ' . base_url . 'errors/404');
