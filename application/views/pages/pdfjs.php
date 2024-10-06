@@ -11,7 +11,9 @@
         <canvas id="the-canvas"></canvas>
     </div>
     <script type="module">
-        var url = 'http://localhost:8080/it/index/viewFile?file=public/VistaPrevia.pdf';
+        //var url = 'http://192.168.1.176/it/index/viewFile?file=15/Apendices/05/1996/000000068/01/15_05_1996_000000068_01_0001.pdf';
+        //var url = 'http://192.168.1.176/it/public/tes.pdf';
+        var url = "<?= $data['url'] ?>";
         var { pdfjsLib } = globalThis;
         pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.mjs';
 
