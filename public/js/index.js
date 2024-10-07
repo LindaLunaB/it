@@ -7,6 +7,8 @@ const itemsPerPage = 10;
 let currentPage = 1;
 let newData = [];
 let tab = 'llave';
+let filesCompare = [];
+let indexSelected = '';
 
 enviar.addEventListener('click', ()=>{
     getInputs();
@@ -130,6 +132,11 @@ function renderTable(page, itemsPerPage) {
     head += `
         <th>Archivo</th>
         <th></th>
+        <th>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCompare">
+                Abrir comparador de archivos
+            </button>
+        </th>
         </tr>
     `;
 
@@ -145,6 +152,11 @@ function renderTable(page, itemsPerPage) {
             <td>
                 <button onclick="openFile('${item.archivo}','${item.name}')" type="button" class="btn btn-primary">
                     Abrir
+                </button>
+            </td>
+            <td class="d-flex justify-content-center">
+                <button onclick="copareFile('${item.archivo}','${item.name}')" type="button" class="btn btn-primary">
+                    Comparar
                 </button>
             </td>
         `;
@@ -315,8 +327,75 @@ function openFile(token, name){
     
     document.querySelector('#exampleModal .modal-title').textContent = name;
     document.querySelector('#exampleModal .modal-body').innerHTML = `<iframe src="${ base_url }index/pdfJS?file=${ token }" width="100%" height="100%" frameborder="0"></iframe>`;
-    console.log(token, name);
     myModal.show();
+}
+
+function copareFile(token, name){
+
+    if(filesCompare.some(file => file.token === token)){
+        return;
+    }
+
+    filesCompare.push({
+        token,
+        name
+    });
+
+    document.querySelector('#content_files').innerHTML += `
+        <div class="flex-fill mx-2">
+            <button type="button" class="btn btn-outline-secondary" onclick="selectFile(this, '${token}')">${name}</button>
+            <button style="position: relative; background-color: red; border: none; border-radius: 50%; width: 20px; height: 20px; display:flex; align-items:center; text-align:center; justify-content:center; left: -10px; top: -50px; color: white;" onclick="removeFile(this, '${token}')">x</button>
+        </div>
+    `;
+
+    console.log(filesCompare);
+}
+
+function selectFile(element, token){
+    
+    if(element.classList.contains('btn-success')){
+        return;
+    }
+
+    if(indexSelected !== ''){
+        let elem = filesCompare.find(file => file.token === indexSelected);
+        document.querySelectorAll('.btn-success').forEach(element => {
+            let text = element.innerText;
+            console.log(text);
+            if(text === elem.name){
+                element.setAttribute('class', 'btn btn-outline-secondary');
+            }
+        });
+    }
+
+    let id = '';
+    if(document.querySelector('#primer_archivo').src === '' || document.querySelector('#primer_archivo').src === base_url){
+        id = 'primer_archivo';
+    }else{
+        id = 'segundo_archivo';
+        indexSelected = token;
+    }
+
+    document.querySelector(`#${id}`).src = `${ base_url }index/pdfJS?file=${ token }`;
+    element.setAttribute('class', 'btn btn-success');
+}
+
+function removeFile(element, token){
+    let primer = document.querySelector('#primer_archivo').src;
+    let primerToken = primer.split('=');
+    if(primerToken[1] === token){
+        document.querySelector('#primer_archivo').src = '';
+    }
+
+    let segundo = document.querySelector('#segundo_archivo').src;
+    let segundoToken = segundo.split('=');
+    if(segundoToken[1] === token){
+        document.querySelector('#segundo_archivo').src = '';
+    }
+
+    let index = filesCompare.findIndex(file => file.token === token);
+    filesCompare.splice(index, 1);
+    element.parentNode.remove();
 }
 const config = {
     llave:[
