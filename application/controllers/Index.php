@@ -66,7 +66,6 @@
         }
 
         protected function searchFiles($filters) {
-            $newFile = [];
             $result = [];
             //Cambiar $base_path al servidor de archivos
             //$base_path = BASE_PATH . 'servidor';
