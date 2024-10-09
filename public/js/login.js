@@ -41,7 +41,7 @@ login.addEventListener('click', ()=>{
     
             window.location.href = `${ base_url }`;
         }
-        /* if(data === true){
+    /*     if(data === true){
             window.location.href = "http://192.168.1.176/it";
         }
         else{
