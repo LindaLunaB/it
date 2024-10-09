@@ -28,12 +28,12 @@
         }
 
         public function pdfJS(){
-            $token = $_REQUEST['file'];
-            $file = JSONWT::validateToken($token);
+            $token = $_REQUEST['file'] ?? '';
+            /* $file = JSONWT::validateToken($token);
             if(!$file){
                 header('Location: ' . base_url . 'errors/404');
                 exit;
-            }
+            } */
             $url = base_url . 'index/viewFile?file=' . $token;
             $data = [
                 "url" => $url,
@@ -67,10 +67,17 @@
 
         protected function searchFiles($filters) {
             $result = [];
+            $result = [
+                "15\\Apendices\\05\\1996\\0000\\01\\01_0001.pdf",
+                "15\\Apendices\\05\\1996\\0000\\01\\01_0002.pdf",
+                "15\\Apendices\\05\\1996\\0000\\01\\01_0003.pdf",
+                "15\\Apendices\\05\\1996\\0000\\01\\01_0004.pdf",
+                "15\\Apendices\\05\\1996\\0000\\01\\01_0005.pdf"
+            ];
             //Cambiar $base_path al servidor de archivos
             //$base_path = BASE_PATH . 'servidor';
             $base_path = FILES_HOST;
-            $this->searchDirectory($base_path, $filters, 0, $result, []);
+            //$this->searchDirectory($base_path, $filters, 0, $result, []);
 
             $files = [];
             $levels = $this->levels;
@@ -166,7 +173,8 @@
                 exit;
             }
             $file = $file->archivo;
-            $filePath = FILES_HOST . "//" . $file;
+            //$filePath = FILES_HOST . "//" . $file;
+            $filePath = BASE_PATH . "public/$file";
             $filePath = realpath($filePath);
             if(file_exists($filePath)) {
                 $fileExtension = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
