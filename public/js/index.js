@@ -99,6 +99,7 @@ const getInputs = ()=>{
         body: myFormData
     })
     .then(res => res.json())
+    //.then(res => res.text())
     .then(data =>{
         loader.classList.add('d-none');
         console.log(data);
@@ -393,16 +394,20 @@ function removeFile(element, token){
         document.querySelector('#segundo_archivo').src = '';
     }
 
+    if(indexSelected === token){
+        indexSelected = '';
+    }
+
     let index = filesCompare.findIndex(file => file.token === token);
     filesCompare.splice(index, 1);
     element.parentNode.remove();
 }
 const config = {
     llave:[
-        {
+     /*   {
             name: 'oficina',
             placeholder: 'Oficina'
-        },
+        },*/
         {
             name: 'tipo',
             placeholder: 'Tipo'

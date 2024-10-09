@@ -9,7 +9,10 @@
 </head>
 <body>
     <div style="display: flex; justify-content: center;">
-        <canvas id="the-canvas"></canvas>
+        <div>
+            <p id="loading" style="font-size: 50px; text-align: center;">Cargando archivo....</p>
+            <canvas id="the-canvas"></canvas>
+        </div>
     </div>
     <script type="module">
         //var url = "<?= $data['url'] ?>";
@@ -40,6 +43,7 @@
                 };
                 var renderTask = page.render(renderContext);
                 renderTask.promise.then(function () {
+                    document.querySelector('#loading').setAttribute('style', 'display: none');
                     console.log('Page rendered');
                 });
             });

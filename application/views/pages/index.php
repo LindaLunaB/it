@@ -101,7 +101,7 @@
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Comparador de archivos</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body" style="height: 500px">
+                <div class="modal-body" style="height: 1000px">
                     <p class="text-center">Archivos seleccionados para comparación:</p>
                     <div style="overflow-x: auto;" id="content_files" class="d-flex my-3 p-3">
                     </div>
