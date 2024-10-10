@@ -88,14 +88,14 @@
                 <div class="modal-body" style="height: 500px">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 </div>
                 </div>
             </div>
         </div>
 
         <div class="modal fade" id="exampleModalCompare" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-xl">
+            <div class="modal-dialog modal-fullscreen">
                 <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Comparador de archivos</h1>
@@ -108,16 +108,16 @@
                     <div class="row">
                         <div class="col-md-6">
                             <p class="text-center">Primer archivo</p>
-                            <iframe id="primer_archivo" src="" width="100%" height="750" frameborder="0"></iframe>
+                            <embed id="primer_archivo" src="" width="100%" height="750" frameborder="0">
                         </div>
                         <div class="col-md-6">
                             <p class="text-center">Segundo archivo</p>
-                            <iframe id="segundo_archivo" src="" width="100%" height="750" frameborder="0"></iframe>
+                            <embed id="segundo_archivo" src="" width="100%" height="750" frameborder="0">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 </div>
                 </div>
             </div>

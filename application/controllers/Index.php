@@ -191,9 +191,6 @@
                     if($fileExtension === 'pdf'){
                         $pdf = new FPDI();
                         $pageCount = $pdf->setSourceFile($filePath);
-                        
-                        /*$pdf = new FPDIExtended();
-                        $pageCount = $pdf->setSourceFile($filePath);*/
 
                         for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
                             $tplIdx = $pdf->importPage($pageNo);
@@ -217,8 +214,6 @@
                        
                         
                         $pdf->Output('I', 'converted_' . basename($filePath) . '.pdf');
-                        echo json_encode($file);
-                        return;
                     }
                 }else{
                     header('HTTP/1.1 415 Unsupported Media Type');

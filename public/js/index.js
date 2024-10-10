@@ -327,7 +327,7 @@ function openFile(token, name){
     });
     
     document.querySelector('#exampleModal .modal-title').textContent = name;
-    document.querySelector('#exampleModal .modal-body').innerHTML = `<iframe src="${ base_url }index/viewFile?file=${ token }" width="100%" height="100%" frameborder="0"></iframe>`;
+    document.querySelector('#exampleModal .modal-body').innerHTML = `<embed src="${ base_url }index/viewFile?file=${ token }#toolbar=0" width="100%" height="750" frameborder="0">`;
     myModal.show();
 }
 
@@ -377,7 +377,7 @@ function selectFile(element, token){
         indexSelected = token;
     }
 
-    document.querySelector(`#${id}`).src = `${ base_url }index/pdfJS?file=${ token }`;
+    document.querySelector(`#${id}`).src = `${ base_url }index/viewFile?file=${ token }#toolbar=0`;
     element.setAttribute('class', 'btn btn-success');
 }
 
