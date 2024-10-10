@@ -1,5 +1,5 @@
 <?php
-    require_once BASE_PATH . "application/libraries/FPDI.php";
+    //require_once BASE_PATH . "application/libraries/FPDI.php";
     require_once BASE_PATH . "application/libraries/JWT.php";
 
     use setasign\Fpdi\Fpdi;
@@ -67,17 +67,10 @@
 
         protected function searchFiles($filters) {
             $result = [];
-            $result = [
-                "15\\Apendices\\05\\1996\\0000\\01\\01_0001.pdf",
-                "15\\Apendices\\05\\1996\\0000\\01\\01_0002.pdf",
-                "15\\Apendices\\05\\1996\\0000\\01\\01_0003.pdf",
-                "15\\Apendices\\05\\1996\\0000\\01\\01_0004.pdf",
-                "15\\Apendices\\05\\1996\\0000\\01\\01_0005.pdf"
-            ];
             //Cambiar $base_path al servidor de archivos
             //$base_path = BASE_PATH . 'servidor';
             $base_path = FILES_HOST;
-            //$this->searchDirectory($base_path, $filters, 0, $result, []);
+            $this->searchDirectory($base_path, $filters, 0, $result, []);
 
             $files = [];
             $levels = $this->levels;
@@ -130,7 +123,7 @@
                     if ($fileinfo->isDir()) {
                         $newPath = array_merge($currentPath, [$fileinfo->getFilename()]);
                         $this->searchDirectory($fileinfo->getPathname(), $filters, $level + 1, $result, $newPath);
-                    } elseif ($fileinfo->getExtension() === 'pdf') {
+                    } elseif ($this->isValidateExtension($fileinfo->getExtension())) {
                         $result[] = implode(DIRECTORY_SEPARATOR, array_merge($currentPath, [$fileinfo->getFilename()]));
                     }
                 }
@@ -167,37 +160,66 @@
 
         public function viewFile(){
             $token = $_REQUEST['file'];
+            
             $file = JSONWT::validateToken($token);
+                
             if(!$file){
+              
                 header('Location: ' . base_url . 'errors/404');
+
                 exit;
             }
+           
             $file = $file->archivo;
-            //$filePath = FILES_HOST . "//" . $file;
-            $filePath = BASE_PATH . "public/$file";
+        
+            $filePath = FILES_HOST . "//" . $file;
+            //$filePath = BASE_PATH . "public/$file";
             $filePath = realpath($filePath);
+          
             if(file_exists($filePath)) {
+                
                 $fileExtension = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
-
+               
                 $mimeTypes = [
-                    "pdf" => "application/pdf"
+                    "pdf" => "application/pdf",
+                    "jpg" => "image/jpeg"
                 ];
+                
 
-                $pdf = new FPDI();
-                $pageCount = $pdf->setSourceFile($filePath);
                 if(isset($mimeTypes[$fileExtension])) {
 
-                    $pdf = new FPDIExtended();
-                    $pageCount = $pdf->setSourceFile($filePath);
+                    if($fileExtension === 'pdf'){
+                        $pdf = new FPDI();
+                        $pageCount = $pdf->setSourceFile($filePath);
+                        
+                        /*$pdf = new FPDIExtended();
+                        $pageCount = $pdf->setSourceFile($filePath);*/
 
-                    for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
-                        $tplIdx = $pdf->importPage($pageNo);
+                        for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
+                            $tplIdx = $pdf->importPage($pageNo);
+                            $pdf->AddPage();
+                            $pdf->useTemplate($tplIdx, 0, 0, 210);
+                            $pdf->Image(base_url . 'public/assets/images/informativo.png', 10, 10, 190);
+                        }
+
+                        $pdf->Output('I', 'watermarked_' . basename($filePath));
+                    }elseif($fileExtension === 'jpg'){
+                   
+                        $pdf = new \FPDF();
+
                         $pdf->AddPage();
-                        $pdf->useTemplate($tplIdx, 0, 0, 210);
-                        $pdf->Image(base_url . 'public/assets/images/informativo.png', 10, 10, 190);
-                    }
+                        list($width, $height) = getimagesize($filePath);
+                        
 
-                    $pdf->Output('I', 'watermarked_' . basename($filePath));
+                        $pdf->Image($filePath, 0, 0, $pdf->GetPageWidth(), $pdf->GetPageHeight(), 'JPG'); // cargando archivo
+                        
+                        $pdf->Image(base_url . 'public/assets/images/informativo.png', 10, 10, 190);// marca_de agua
+                       
+                        
+                        $pdf->Output('I', 'converted_' . basename($filePath) . '.pdf');
+                        echo json_encode($file);
+                        return;
+                    }
                 }else{
                     header('HTTP/1.1 415 Unsupported Media Type');
                     echo "Tipo de archivo no soportado.";
@@ -206,6 +228,13 @@
                 header('HTTP/1.1 404 Not Found');
                 echo "Archivo no encontrado.";
             }
+        }
+
+        protected function isValidateExtension($extension){
+            $extensions = ['pdf', 'jpg'];
+            $extension = strtolower($extension);
+
+            return in_array($extension, $extensions);
         }
     }
 ?>

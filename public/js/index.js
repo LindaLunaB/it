@@ -327,7 +327,7 @@ function openFile(token, name){
     });
     
     document.querySelector('#exampleModal .modal-title').textContent = name;
-    document.querySelector('#exampleModal .modal-body').innerHTML = `<iframe src="${ base_url }index/pdfJS?file=${ token }" width="100%" height="100%" frameborder="0"></iframe>`;
+    document.querySelector('#exampleModal .modal-body').innerHTML = `<iframe src="${ base_url }index/viewFile?file=${ token }" width="100%" height="100%" frameborder="0"></iframe>`;
     myModal.show();
 }
 

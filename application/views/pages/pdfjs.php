@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <!-- <script src="https://mozilla.github.io/pdf.js/build/pdf.mjs" type="module"></script> -->
-    <script src="<?= base_url ?>public/libraries/pdf.mjs" type="module"></script>
+    <script src="https://mozilla.github.io/pdf.js/build/pdf.mjs" type="module"></script>
+    <!-- <script src="<?= base_url ?>public/libraries/pdf.mjs" type="module"></script> -->
 </head>
 <body>
     <div style="display: flex; justify-content: center;">
@@ -15,11 +15,10 @@
         </div>
     </div>
     <script type="module">
-        //var url = "<?= $data['url'] ?>";
-        var url = "http://localhost:8080/it/index/viewFile?file=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhcmNoaXZvIjoiMTUvQXBlbmRpY2VzLzA1LzE5OTYvMDAwMC8wMS8wMV8wMDAxLnBkZiJ9.pXZymdFT_qjkmIEsbsZfa_kgzIxIG0KMz5mqHoANrEg";
+        var url = "<?= $data['url'] ?>";
         var { pdfjsLib } = globalThis;
-        /* pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.mjs'; */
-        pdfjsLib.GlobalWorkerOptions.workerSrc = '<?= base_url ?>public/libraries/pdf.worker.mjs';
+        pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.mjs';
+        //pdfjsLib.GlobalWorkerOptions.workerSrc = '<?= base_url ?>public/libraries/pdf.worker.mjs';
 
         var loadingTask = pdfjsLib.getDocument(url);
         loadingTask.promise.then(function(pdf) {

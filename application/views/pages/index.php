@@ -108,11 +108,11 @@
                     <div class="row">
                         <div class="col-md-6">
                             <p class="text-center">Primer archivo</p>
-                            <iframe id="primer_archivo" src="" width="100%" height="100%" frameborder="0"></iframe>
+                            <iframe id="primer_archivo" src="" width="100%" height="750" frameborder="0"></iframe>
                         </div>
                         <div class="col-md-6">
                             <p class="text-center">Segundo archivo</p>
-                            <iframe id="segundo_archivo" src="" width="100%" height="100%" frameborder="0"></iframe>
+                            <iframe id="segundo_archivo" src="" width="100%" height="750" frameborder="0"></iframe>
                         </div>
                     </div>
                 </div>
