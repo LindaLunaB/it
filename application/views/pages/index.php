@@ -11,6 +11,28 @@
             -moz-box-shadow: -1px 2px 33px -14px rgba(0,0,0,0.6);
             box-shadow: -1px 2px 33px -14px rgba(0,0,0,0.6);
         }
+        :root{
+            --primary : #852333;
+        }
+        .btn-primary {
+            --bs-btn-bg: var(--primary);
+            --bs-btn-border-color: var(--primary);
+            --bs-btn-hover-bg: var(--primary);
+            --bs-btn-hover-border-color: var(--primary);
+            --bs-btn-active-bg: var(--primary);
+            --bs-btn-active-border-color: var(--primary);
+            --bs-btn-disabled-bg: var(--primary);
+            --bs-btn-disabled-border-color: var(--primary);
+        }
+        .form-control:focus,
+        .form-select:focus{
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.25rem rgb(133, 35, 51, 0.25);
+        }
+
+        .form-select option:hover{
+            background-color: var(--primary) !important;
+        }
     </style>
 </head>
 <body class="bg-secondary-subtle">
