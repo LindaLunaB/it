@@ -85,7 +85,7 @@
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body" style="height: 500px">
+                <div class="modal-body">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -108,11 +108,11 @@
                     <div class="row">
                         <div class="col-md-6">
                             <p class="text-center">Primer archivo</p>
-                            <embed id="primer_archivo" src="" width="100%" height="750" frameborder="0">
+                            <embed id="primer_archivo" src="http://localhost:8080/it/index/pdfjs" width="100%" height="750" frameborder="0">
                         </div>
                         <div class="col-md-6">
                             <p class="text-center">Segundo archivo</p>
-                            <embed id="segundo_archivo" src="" width="100%" height="750" frameborder="0">
+                            <embed id="segundo_archivo" src="http://localhost:8080/it/index/pdfjs" width="100%" height="750" frameborder="0">
                         </div>
                     </div>
                 </div>

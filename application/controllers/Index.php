@@ -29,12 +29,12 @@
 
         public function pdfJS(){
             $token = $_REQUEST['file'] ?? '';
-            /* $file = JSONWT::validateToken($token);
+            $file = JSONWT::validateToken($token);
             if(!$file){
                 header('Location: ' . base_url . 'errors/404');
                 exit;
-            } */
-            $url = base_url . 'index/viewFile?file=' . $token;
+            }
+            $url = base_url . 'index/viewFile?file=' . $token . '#toolbar=0';
             $data = [
                 "url" => $url,
                 "extra_js" => "
