@@ -11,7 +11,40 @@
             -moz-box-shadow: -1px 2px 33px -14px rgba(0,0,0,0.6);
             box-shadow: -1px 2px 33px -14px rgba(0,0,0,0.6);
         }
-    </style>
+        :root, [data-bs-theme=light] {
+
+        }
+        .btn-primary {
+            --bs-btn-color: #fff; 
+            --bs-btn-bg: #852333; 
+            --bs-btn-border-color: #852333;
+            --bs-btn-hover-color: #fff; 
+            --bs-btn-hover-bg: #73202E; 
+            --bs-btn-hover-border-color: #6B1D28; 
+            --bs-btn-focus-shadow-rgb: 133, 35, 51; 
+            --bs-btn-active-color: #fff; 
+            --bs-btn-active-bg: #6B1D28; 
+            --bs-btn-active-border-color: #5A1823; 
+            --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125); 
+            --bs-btn-disabled-color: #fff; 
+            --bs-btn-disabled-bg: #bda8a8; 
+            --bs-btn-disabled-border-color: #bda8a8; 
+            --bs-btn-disabled-opacity: 0.65; 
+        }
+        #pagination .page-item a {
+            color: white; 
+            background-color:#bda8a8 ; 
+        }
+
+     
+        #pagination .page-item.active a {
+            background-color: #852333;
+            border-color: #852333;
+        }
+
+       
+
+</style>
 </head>
 <body class="bg-secondary-subtle">
     <div id="loader" class="position-absolute w-100 z-1 d-none">

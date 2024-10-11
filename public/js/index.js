@@ -33,7 +33,7 @@ const getInputs = ()=>{
                 })
             }
         }
-
+      
         let select = document.querySelector(`#${campo.name}Select`);
         let select_value = select.value;
 
@@ -317,6 +317,7 @@ function renderForm(inputs){
         buttonClick.addEventListener('click', ()=>{
             document.querySelector(`#${campo.name}`).value = "";
             document.querySelector(`#${campo.name}Select`).value = "Seleccione una opción";
+           
         })
     });
 }
@@ -378,7 +379,7 @@ function selectFile(element, token){
     }
 
     document.querySelector(`#${id}`).src = `${ base_url }index/pdfjs?file=${ token }`;
-    element.setAttribute('class', 'btn btn-success');
+    element.setAttribute('class', 'btn btn-success custom-success');
 }
 
 function removeFile(element, token){
