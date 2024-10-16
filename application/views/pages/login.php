@@ -8,9 +8,10 @@
     <link href="<?= base_url ?>public/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="<?= base_url ?>public/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <link href="<?= base_url ?>public/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+  
 </head>
 <body>
-<div class="auth-page-wrapper auth-bg-cover py-5 d-flex justify-content-center align-items-center min-vh-100">
+    <div class="auth-page-wrapper auth-bg-cover py-5 d-flex justify-content-center align-items-center min-vh-100">
         <div class="bg-overlay"></div>
         <div class="auth-page-content overflow-hidden pt-lg-5">
             <div class="container">
@@ -55,7 +56,7 @@
                                                 </div>
                                             </div>
                                             <div class="mt-4">
-                                                <button class="btn btn-primary w-100" id="login">Acceder</button>
+                                                <button  class="btn btn-primary w-100" id="login">Acceder</button>
                                             </div>
                                             <div id="error_feedback" class="alert alert-danger mt-4 d-none" role="alert">
                                                 A simple danger alert—check it out!

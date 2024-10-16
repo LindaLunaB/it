@@ -239,6 +239,7 @@ function renderPagination(totalItems, itemsPerPage, currentPage) {
     pagination.appendChild(createPageItem(totalPages, 'Ultimo', false, currentPage === totalPages));
 }
 
+
 function renderForm(inputs){
     const contenedor = document.querySelector("#contenedor");
     contenedor.innerHTML = '';
@@ -256,15 +257,6 @@ function renderForm(inputs){
         // Crear el div para el select
         const divSelect = document.createElement('div');
         divSelect.className = 'col-12 col-md-3 mb-3';
-        const select = document.createElement('select');
-        select.className = 'form-select';
-        select.id = `${campo.name}Select`;
-        select.setAttribute('aria-label', 'Default select example');
-        const optionDefault = document.createElement('option');
-        optionDefault.selected = true;
-        optionDefault.disabled = true;
-        optionDefault.textContent = 'Seleccione una opción';
-        select.appendChild(optionDefault);
         let options = [
             { value: 'igual a', text: 'igual a' },
             { value: 'no igual a', text: 'no igual a' },
@@ -273,13 +265,52 @@ function renderForm(inputs){
             { value: 'mayor o igual a', text: 'mayor o igual a' },
             { value: 'menor o igual a', text: 'menor o igual a' }
         ];
+        /* const select = document.createElement('select');
+        select.className = 'form-select';
+        select.id = ${campo.name}Select;
+        select.setAttribute('aria-label', 'Default select example');
+        const optionDefault = document.createElement('option');
+        optionDefault.selected = true;
+        optionDefault.disabled = true;
+        optionDefault.textContent = 'Seleccione una opción';
+        select.appendChild(optionDefault);
         options.forEach(option => {
             const opt = document.createElement('option');
             opt.value = option.value;
             opt.textContent = option.text;
+            opt.setAttribute('class', 'optionElement');
             select.appendChild(opt);
         });
-        divSelect.appendChild(select);
+        divSelect.appendChild(select);*/
+        let listLi = `
+            <div class="dropdown">
+                <input type="checkbox" class="dropdown_switch single-checkbox" id="filter-switch_${campo.name}" hidden />
+                <label for="filter-switch_${campo.name}" class="dropdown__options-filter">
+                    <ul class="dropdown__filter" role="listbox" tabindex="-1">
+                        <li class="dropdown__filter-selected" aria-selected="true">
+                            Seleccione una opción
+                        </li>
+                        <li>
+        `;
+
+        listLi += `<ul class="dropdown__select">`;
+
+        options.forEach(option => {
+            listLi += `
+                <li class="dropdown__select-option" role="option">${option.value}</li>
+            `;
+        });
+
+        listLi += `
+                            </ul>
+                        </li>
+                    </ul>
+                </label>
+            </div>
+        `;
+
+        divSelect.innerHTML += listLi;
+
         contenedor.appendChild(divSelect);
 
         // Crear el div para el input
@@ -317,7 +348,7 @@ function renderForm(inputs){
         buttonClick.addEventListener('click', ()=>{
             document.querySelector(`#${campo.name}`).value = "";
             document.querySelector(`#${campo.name}Select`).value = "Seleccione una opción";
-           
+            
         })
     });
 }
@@ -447,3 +478,38 @@ const config = {
 }
 
 renderForm(config[tab]);
+
+const checkboxes = document.querySelectorAll('.single-checkbox');
+const dropdowns = document.querySelectorAll('.dropdown');
+
+checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', function () {
+        if (this.checked) {
+            checkboxes.forEach(cb => {
+                if (cb !== this) {
+                    cb.checked = false;
+                }
+            });
+        }
+    });
+});
+
+function closeAllDropdowns() {
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = false;
+    });
+}
+
+document.addEventListener('click', function (event) {
+    let isClickInsideDropdown = false;
+
+    dropdowns.forEach(dropdown => {
+        if (dropdown.contains(event.target)) {
+            isClickInsideDropdown = true;
+        }
+    });
+
+    if (!isClickInsideDropdown) {
+        closeAllDropdowns();
+    }
+});

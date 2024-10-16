@@ -12,11 +12,13 @@
         }
 
         public function index(){//validacion de token
-            /*if(!isset($_SESSION['token']) || !JSONWT::validateToken($_SESSION['token'])){
+           $token = JSONWT::validateToken($_SESSION['token']);
+            if(!isset($_SESSION['token']) || !$token ){
                 header('Location: ' . base_url . 'login');
-            }*/
+            }
 
             $data = [
+                "nombre" => $token->nombre,
                 "extra_js" => "
                     <script>
                         const base_url = '" . base_url . "';
@@ -25,6 +27,7 @@
             ];
 
             $this->view('pages/index', '', $data);
+            
         }
 
         public function pdfJS(){

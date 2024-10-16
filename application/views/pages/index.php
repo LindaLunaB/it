@@ -5,19 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Inicio</title>
     <link rel="stylesheet" href="<?= base_url ?>public/bootstrap/bootstrap.min.css">
+    <!-- Incluye el archivo de CSS de Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        .user-session {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-session span {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .btn-logout {
+            background-color: #f44336; /* Rojo para el botón de cerrar sesión */
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .btn-logout:hover {
+            background-color: #d32f2f;
+        }
         .box-shadow{
             -webkit-box-shadow: -1px 2px 33px -14px rgba(0,0,0,0.6);
             -moz-box-shadow: -1px 2px 33px -14px rgba(0,0,0,0.6);
             box-shadow: -1px 2px 33px -14px rgba(0,0,0,0.6);
         }
-        :root, [data-bs-theme=light] {
-
+        :root{
+            --primary : #852333;
         }
         .btn-primary {
             --bs-btn-color: #fff; 
-            --bs-btn-bg: #852333; 
-            --bs-btn-border-color: #852333;
+            --bs-btn-bg: var(--primary); 
+            --bs-btn-border-color: var(--primary);
             --bs-btn-hover-color: #fff; 
             --bs-btn-hover-bg: #73202E; 
             --bs-btn-hover-border-color: #6B1D28; 
@@ -43,8 +66,101 @@
         }
 
        
+        :root{
+            --primary : #852333;
+        }
+        /*
+        .btn-primary {
+            --bs-btn-bg: var(--primary);
+            --bs-btn-border-color: var(--primary);
+            --bs-btn-hover-bg: var(--primary);
+            --bs-btn-hover-border-color: var(--primary);
+            --bs-btn-active-bg: var(--primary);
+            --bs-btn-active-border-color: var(--primary);
+            --bs-btn-disabled-bg: var(--primary);
+            --bs-btn-disabled-border-color: var(--primary);
+        }*/
+        .form-control:focus,
+        .form-select:focus{
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.25rem rgb(133, 35, 51, 0.25);
+            
+        }
+       
+        .dropdown_switch:checked + .dropdownoptions-filter .dropdown_select {
+            transform: scaleY(1);
+            opacity: 1;
+        }
 
-</style>
+        .dropdown_switch:checked + .dropdownoptions-filter .dropdown_filter:after {
+            transform: rotate(-135deg);
+        }
+
+        .dropdown__options-filter {
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .dropdown__filter {
+            border: var(--bs-border-width) solid var(--bs-border-color);
+            border-radius: var(--bs-border-radius);
+            list-style: none;
+            position: relative;
+            display: flex;
+            padding: 6px 12px;
+            color: #595959;
+            background-color: #fff;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        .dropdown__filter:focus {
+            outline: none;
+        }
+
+        .dropdown__filter::after {
+            position: absolute;
+            top: 45%;
+            right: 20px;
+            content: '';
+            width: 10px;
+            height: 10px;
+            border-right: 1px solid #595959;
+            border-bottom: 1px solid #595959;
+            transform: rotate(45deg) translateX(-45%);
+            transition: 0.3s ease-in-out;
+        }
+
+        .dropdown__select {
+            z-index: 100;
+            background-color: white;
+            position: absolute;
+            border: var(--bs-border-width) solid var(--bs-border-color);
+            top: 100%;
+            left: 0;
+            padding: 0px;
+            width: 100%;
+            margin-top: 5px;
+            overflow: hidden;
+            transform: scaleY(0);
+            transform-origin: top;
+            opacity: 0;
+            transition: 0.2s ease-in-out;
+        }
+
+        .dropdown__select-option{
+            padding: 6px 12px;
+            list-style: none;
+        }
+
+        .dropdown__select-option:hover {
+            color: white;
+            background-color: var(--primary);
+        }
+        
+        
+      
+    </style>
 </head>
 <body class="bg-secondary-subtle">
     <div id="loader" class="position-absolute w-100 z-1 d-none">
@@ -61,7 +177,14 @@
             </div>
             <div class="px-3 py-4 d-flex align-items-center" style="background-color: #f3f3f9">
                 <img src="<?= base_url ?>public/assets/images/no_imagen.png" width="25" alt="">
-                <span class="ps-3 fw-medium" style="color:#495057; font-size: 0.8125rem; ">Usuario</span>
+                <span class="ps-3 fw-medium" style="color:#495057; font-size: 0.8125rem; "><?= $data['nombre'] ?>
+                   
+                        <form action="<?php echo base_url; ?>login/logout" method="POST" class="d-inline ms-3">
+                            <button type="submit" name="logout" class="btn btn-outline-secondary">
+                                <i class="fas fa-sign-out-alt"></i> 
+                            </button>
+                        </form>
+                </span>        
             </div>
         </section>
         <hr class="text-secondary my-0">
@@ -82,7 +205,7 @@
     <main class="pt-5 position-relative">
         <section class="container bg-white p-3 rounded box-shadow">
             <div class="border border-light-subtle p-3 border-opacity-10">
-                <h4 class="mb-0">Usuario</h4>
+                <h4 class="mb-0">Tepeaca</h4>
             </div>
             <div class="border border-light-subtle p-3 border-opacity-10">
                 <div id="contenedor" class="row">

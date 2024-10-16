@@ -18,6 +18,7 @@
             }
             $data = [];
             $this->view('pages/login', '', $data);
+
         }
 
         public function login(){
@@ -51,7 +52,7 @@
                 'nombre' => $userDB[0]['nombre'],
                 'idProfile' => $userDB[0]['idProfile']
             ];
-
+            
             $token = JSONWT::generateToken($data, 3000);
 
             $_SESSION['token'] = $token['token'];
@@ -59,7 +60,15 @@
             echo json_encode($token);
             return;
         }
+        public function logout(){
+                unset($_SESSION['token']);
+                header('Location: ' . base_url.'login');
 
+        }
+        public function forgotPassword(){
+            
+
+        }
         public function register(){
 
             $nombre = "Linda Luna";
