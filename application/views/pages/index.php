@@ -37,39 +37,21 @@
         :root{
             --primary : #852333;
         }
-        .btn-primary {
-            --bs-btn-color: #fff; 
-            --bs-btn-bg: var(--primary); 
-            --bs-btn-border-color: var(--primary);
-            --bs-btn-hover-color: #fff; 
-            --bs-btn-hover-bg: #73202E; 
-            --bs-btn-hover-border-color: #6B1D28; 
-            --bs-btn-focus-shadow-rgb: 133, 35, 51; 
-            --bs-btn-active-color: #fff; 
-            --bs-btn-active-bg: #6B1D28; 
-            --bs-btn-active-border-color: #5A1823; 
-            --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125); 
-            --bs-btn-disabled-color: #fff; 
-            --bs-btn-disabled-bg: #bda8a8; 
-            --bs-btn-disabled-border-color: #bda8a8; 
-            --bs-btn-disabled-opacity: 0.65; 
-        }
+
         #pagination .page-item a {
             color: white; 
             background-color:#bda8a8 ; 
         }
 
-     
         #pagination .page-item.active a {
             background-color: #852333;
             border-color: #852333;
         }
 
-       
         :root{
             --primary : #852333;
         }
-        /*
+        
         .btn-primary {
             --bs-btn-bg: var(--primary);
             --bs-btn-border-color: var(--primary);
@@ -79,20 +61,21 @@
             --bs-btn-active-border-color: var(--primary);
             --bs-btn-disabled-bg: var(--primary);
             --bs-btn-disabled-border-color: var(--primary);
-        }*/
+        }
+
         .form-control:focus,
         .form-select:focus{
             border-color: var(--primary);
             box-shadow: 0 0 0 0.25rem rgb(133, 35, 51, 0.25);
             
         }
-       
-        .dropdown_switch:checked + .dropdownoptions-filter .dropdown_select {
+
+        .dropdown__switch:checked + .dropdown__options-filter .dropdown__select {
             transform: scaleY(1);
             opacity: 1;
         }
 
-        .dropdown_switch:checked + .dropdownoptions-filter .dropdown_filter:after {
+        .dropdown__switch:checked + .dropdown__options-filter .dropdown__filter:after {
             transform: rotate(-135deg);
         }
 
@@ -110,7 +93,7 @@
             padding: 6px 12px;
             color: #595959;
             background-color: #fff;
-            font-size: 1rem;
+            font-size: 14px;
             transition: 0.3s;
         }
 
@@ -148,18 +131,19 @@
             transition: 0.2s ease-in-out;
         }
 
-        .dropdown__select-option{
+        .dropdown__select-option {
             padding: 6px 12px;
             list-style: none;
+        }
+
+        .dropdown__select-option:last-of-type {
+            border-bottom: 0;
         }
 
         .dropdown__select-option:hover {
             color: white;
             background-color: var(--primary);
         }
-        
-        
-      
     </style>
 </head>
 <body class="bg-secondary-subtle">

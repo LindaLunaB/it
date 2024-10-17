@@ -12,7 +12,7 @@
         }
 
         public function index(){//validacion de token
-           $token = JSONWT::validateToken($_SESSION['token']);
+            $token = JSONWT::validateToken($_SESSION['token'] ?? '');
             if(!isset($_SESSION['token']) || !$token ){
                 header('Location: ' . base_url . 'login');
             }

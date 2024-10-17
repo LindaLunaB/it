@@ -267,7 +267,7 @@ function renderForm(inputs){
         ];
         /* const select = document.createElement('select');
         select.className = 'form-select';
-        select.id = ${campo.name}Select;
+        select.id = `${campo.name}Select`;
         select.setAttribute('aria-label', 'Default select example');
         const optionDefault = document.createElement('option');
         optionDefault.selected = true;
@@ -281,10 +281,10 @@ function renderForm(inputs){
             opt.setAttribute('class', 'optionElement');
             select.appendChild(opt);
         });
-        divSelect.appendChild(select);*/
+        divSelect.appendChild(select); */
         let listLi = `
             <div class="dropdown">
-                <input type="checkbox" class="dropdown_switch single-checkbox" id="filter-switch_${campo.name}" hidden />
+                <input type="checkbox" class="dropdown__switch single-checkbox" id="filter-switch_${campo.name}" hidden />
                 <label for="filter-switch_${campo.name}" class="dropdown__options-filter">
                     <ul class="dropdown__filter" role="listbox" tabindex="-1">
                         <li class="dropdown__filter-selected" aria-selected="true">
@@ -348,7 +348,6 @@ function renderForm(inputs){
         buttonClick.addEventListener('click', ()=>{
             document.querySelector(`#${campo.name}`).value = "";
             document.querySelector(`#${campo.name}Select`).value = "Seleccione una opción";
-            
         })
     });
 }
