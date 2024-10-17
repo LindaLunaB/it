@@ -284,12 +284,10 @@ function renderForm(inputs){
         divSelect.appendChild(select); */
         let listLi = `
             <div class="dropdown">
-                <input type="checkbox" class="dropdown__switch single-checkbox" id="filter-switch_${campo.name}" hidden />
-                <label for="filter-switch_${campo.name}" class="dropdown__options-filter">
+                <input type="checkbox" class="dropdown__switch single-checkbox" id="${campo.name}Select" value="Seleccione una opción" hidden />
+                <label for="${campo.name}Select" class="dropdown__options-filter">
                     <ul class="dropdown__filter" role="listbox" tabindex="-1">
-                        <li class="dropdown__filter-selected" aria-selected="true">
-                            Seleccione una opción
-                        </li>
+                        <li class="dropdown__filter-selected" aria-selected="true">Seleccione una opción</li>
                         <li>
         `;
 
@@ -480,6 +478,7 @@ renderForm(config[tab]);
 
 const checkboxes = document.querySelectorAll('.single-checkbox');
 const dropdowns = document.querySelectorAll('.dropdown');
+const dropdown_select = document.querySelectorAll('.dropdown__select');
 
 checkboxes.forEach(checkbox => {
     checkbox.addEventListener('change', function () {
@@ -511,4 +510,16 @@ document.addEventListener('click', function (event) {
     if (!isClickInsideDropdown) {
         closeAllDropdowns();
     }
+});
+
+dropdown_select.forEach(select => {
+    select.addEventListener('click', function (e) {
+        const element = e.target;
+        const value = e.target.innerText;
+
+        const base = element.parentNode.parentNode.parentNode;
+
+        base.childNodes[1].innerText = value;
+        document.querySelector(`#${base.parentNode.getAttribute('for')}`).value = value;
+    });
 });
